@@ -1,0 +1,473 @@
+<html>
+<head>
+<title>Game.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #5f826b; font-style: italic;}
+.s1 { color: #67a37c; font-style: italic;}
+.s2 { color: #bcbec4;}
+.s3 { color: #cf8e6d;}
+.s4 { color: #bcbec4;}
+.s5 { color: #7a7e85;}
+.s6 { color: #2aacb8;}
+.s7 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Game.java</font>
+</center></td></tr></table>
+<pre><span class="s0">/**</span>
+ <span class="s0">* </span><span class="s1">@author </span><span class="s0">Titas Stongvila 5 grupė</span>
+ <span class="s0">**/</span>
+
+<span class="s3">import </span><span class="s2">processing</span><span class="s4">.</span><span class="s2">core</span><span class="s4">.</span><span class="s2">PApplet</span><span class="s4">;</span>
+<span class="s3">import </span><span class="s2">processing</span><span class="s4">.</span><span class="s2">core</span><span class="s4">.</span><span class="s2">PImage</span><span class="s4">;</span>
+<span class="s3">import </span><span class="s2">processing</span><span class="s4">.</span><span class="s2">data</span><span class="s4">.</span><span class="s2">JSONArray</span><span class="s4">;</span>
+<span class="s3">import </span><span class="s2">processing</span><span class="s4">.</span><span class="s2">data</span><span class="s4">.</span><span class="s2">JSONObject</span><span class="s4">;</span>
+
+<span class="s0">/**</span>
+ <span class="s0">* Pagrindinė žaidimo klasė, kuri paveldi PApplet ir apdoroja žaidimo logiką, animacijas,</span>
+ <span class="s0">* žemėlapio generavimą bei sąveiką su žaidėjo įvestimi.</span>
+ <span class="s0">*/</span>
+<span class="s3">public class </span><span class="s2">Game </span><span class="s3">extends </span><span class="s2">PApplet </span><span class="s4">{</span>
+    <span class="s5">// Animacijos dažnis (milisekundėmis)</span>
+    <span class="s3">final int </span><span class="s2">ANIM_FREQUENCY </span><span class="s4">= </span><span class="s6">150</span><span class="s4">; </span><span class="s5">// 150ms</span>
+    <span class="s5">// Kadrų per sekundę rodymo dažnis</span>
+    <span class="s3">final int </span><span class="s2">FPS </span><span class="s4">= </span><span class="s6">60</span><span class="s4">;</span>
+
+    <span class="s5">// Nustatymai gridui redaktoriuje</span>
+    <span class="s3">final int </span><span class="s2">GRID_OFFSET_X </span><span class="s4">= </span><span class="s6">100</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">GRID_OFFSET_Y </span><span class="s4">= </span><span class="s6">100</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">TILE_PALLET_OFFSET_X </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">TILE_PALLET_OFFSET_Y </span><span class="s4">= </span><span class="s6">32</span><span class="s4">;</span>
+
+    <span class="s5">// Taisyklių tipo reikšmės</span>
+    <span class="s3">final int </span><span class="s2">AIR </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">BORDER </span><span class="s4">= </span><span class="s6">1</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">SPIKE_BOTTOM </span><span class="s4">= </span><span class="s6">2</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">SPIKE_TOP </span><span class="s4">= </span><span class="s6">3</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">SIGN </span><span class="s4">= </span><span class="s6">4</span><span class="s4">;</span>
+
+    <span class="s5">// Vaizdo objektai ir paveikslėlių masyvas</span>
+    <span class="s2">PImage tileImg</span><span class="s4">;</span>
+    <span class="s2">PImage temp</span><span class="s4">;</span>
+    <span class="s2">PImage</span><span class="s4">[] </span><span class="s2">images</span><span class="s4">;</span>
+
+    <span class="s5">// Ekrano matmenys ir plytelių dydžiai</span>
+    <span class="s3">final int </span><span class="s2">screenWidth </span><span class="s4">= </span><span class="s6">768</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">screenHeight </span><span class="s4">= </span><span class="s6">512</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">tileW </span><span class="s4">= </span><span class="s6">32</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">tileH </span><span class="s4">= </span><span class="s6">32</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">editorTileW </span><span class="s4">= </span><span class="s6">10</span><span class="s4">;</span>
+    <span class="s3">final int </span><span class="s2">editorTileH </span><span class="s4">= </span><span class="s6">10</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">cols </span><span class="s4">= </span><span class="s2">screenHeight </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">rows </span><span class="s4">= </span><span class="s2">screenWidth </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">;</span>
+
+    <span class="s5">// Charakterio būsena: 0 - ramus, 1 - vaikščiojimas į kairę, 2 - vaikščiojimas į dešinę, 3 - šuolis</span>
+    <span class="s3">int </span><span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+    <span class="s2">Animation characterWalkLeft</span><span class="s4">;</span>
+    <span class="s2">Animation characterWalkRight</span><span class="s4">;</span>
+    <span class="s2">Animation characterIdle</span><span class="s4">;</span>
+    <span class="s2">Animation characterJump</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">characterX</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">characterY</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">characterW </span><span class="s4">= </span><span class="s6">32</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">characterH </span><span class="s4">= </span><span class="s6">32</span><span class="s4">;</span>
+    <span class="s5">// Judėjimo greičiai ir šuolio parametrų reikšmės</span>
+    <span class="s3">int </span><span class="s2">stepSize </span><span class="s4">= </span><span class="s6">5</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">jumpStepSize </span><span class="s4">= </span><span class="s6">4</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">velocityX </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">velocityY </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">startingY</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">startX </span><span class="s4">= </span><span class="s6">64</span><span class="s4">;</span>
+    <span class="s3">int </span><span class="s2">startY </span><span class="s4">= </span><span class="s6">960</span><span class="s4">;</span>
+    <span class="s3">boolean </span><span class="s2">respawn </span><span class="s4">= </span><span class="s3">false</span><span class="s4">;</span>
+
+    <span class="s5">// Laikmatis animacijai</span>
+    <span class="s3">long </span><span class="s2">animTimer </span><span class="s4">= </span><span class="s2">millis</span><span class="s4">();</span>
+
+    <span class="s5">// Žemėlapio kintamieji: skaičiai žymi skirtingus elementus (pvz., 9 - blokas, 71 - platforma, 207 - spygliuotas grindys, 216 - spygliuota lubos)</span>
+    <span class="s3">int</span><span class="s4">[][] </span><span class="s2">map </span><span class="s4">= </span><span class="s3">new int</span><span class="s4">[</span><span class="s2">cols </span><span class="s4">* </span><span class="s6">2</span><span class="s4">][</span><span class="s2">rows </span><span class="s4">* </span><span class="s6">2</span><span class="s4">];</span>
+    <span class="s3">int </span><span class="s2">level </span><span class="s4">= </span><span class="s6">1</span><span class="s4">;</span>
+    <span class="s5">// Redaktoriaus režimo flagas</span>
+    <span class="s3">boolean </span><span class="s2">editor </span><span class="s4">= </span><span class="s3">false</span><span class="s4">;</span>
+    <span class="s5">// Pasirinktos plytelės indeksas</span>
+    <span class="s3">int </span><span class="s2">selectedTile </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Nustato pradinius ekrano matmenis.</span>
+     <span class="s0">*/</span>
+    <span class="s3">public void </span><span class="s2">settings</span><span class="s4">() {</span>
+        <span class="s2">size</span><span class="s4">(</span><span class="s2">screenWidth</span><span class="s4">, </span><span class="s2">screenHeight</span><span class="s4">);</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Inicijuoja žaidimo pradžios parametrus: kadrų dažnį, įkelia plytelių paveikslėlius,</span>
+     <span class="s0">* generuoja žemėlapį bei sukuria charakterio animacijas.</span>
+     <span class="s0">*/</span>
+    <span class="s3">public void </span><span class="s2">setup</span><span class="s4">() {</span>
+        <span class="s2">frameRate</span><span class="s4">(</span><span class="s2">FPS</span><span class="s4">);</span>
+        <span class="s2">tileImg </span><span class="s4">= </span><span class="s2">loadImage</span><span class="s4">(</span><span class="s7">&quot;tiles2.png&quot;</span><span class="s4">);</span>
+
+        <span class="s5">// Įkeliame visus plytelių paveikslėlius į masyvą</span>
+        <span class="s2">images </span><span class="s4">= </span><span class="s3">new </span><span class="s2">PImage</span><span class="s4">[(</span><span class="s2">tileImg</span><span class="s4">.</span><span class="s2">width </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">) * (</span><span class="s2">tileImg</span><span class="s4">.</span><span class="s2">height </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">)];</span>
+        <span class="s3">for </span><span class="s4">(</span><span class="s3">int </span><span class="s2">i </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">i </span><span class="s4">&lt; (</span><span class="s2">tileImg</span><span class="s4">.</span><span class="s2">width </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">); </span><span class="s2">i</span><span class="s4">++) {</span>
+            <span class="s3">for </span><span class="s4">(</span><span class="s3">int </span><span class="s2">j </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">j </span><span class="s4">&lt; (</span><span class="s2">tileImg</span><span class="s4">.</span><span class="s2">height </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">); </span><span class="s2">j</span><span class="s4">++) {</span>
+                <span class="s2">images</span><span class="s4">[</span><span class="s2">i </span><span class="s4">+ </span><span class="s2">j </span><span class="s4">* (</span><span class="s2">tileImg</span><span class="s4">.</span><span class="s2">width </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">)] = </span><span class="s2">tileImg</span><span class="s4">.</span><span class="s2">get</span><span class="s4">(</span><span class="s2">i </span><span class="s4">* </span><span class="s2">tileW</span><span class="s4">, </span><span class="s2">j </span><span class="s4">* </span><span class="s2">tileH</span><span class="s4">, </span><span class="s2">tileW</span><span class="s4">, </span><span class="s2">tileH</span><span class="s4">);</span>
+            <span class="s4">}</span>
+        <span class="s4">}</span>
+
+        <span class="s2">generateMap</span><span class="s4">();</span>
+
+        <span class="s5">// Inicializuojame charakterio animacijas</span>
+        <span class="s2">characterWalkLeft </span><span class="s4">= </span><span class="s3">new </span><span class="s2">Animation</span><span class="s4">(</span><span class="s7">&quot;./characterAnims/walkLeft&quot;</span><span class="s4">, </span><span class="s6">3</span><span class="s4">, </span><span class="s3">this</span><span class="s4">);</span>
+        <span class="s2">characterWalkRight </span><span class="s4">= </span><span class="s3">new </span><span class="s2">Animation</span><span class="s4">(</span><span class="s7">&quot;./characterAnims/walkRight&quot;</span><span class="s4">, </span><span class="s6">3</span><span class="s4">, </span><span class="s3">this</span><span class="s4">);</span>
+        <span class="s2">characterJump </span><span class="s4">= </span><span class="s3">new </span><span class="s2">Animation</span><span class="s4">(</span><span class="s7">&quot;./characterAnims/idle&quot;</span><span class="s4">, </span><span class="s6">1</span><span class="s4">, </span><span class="s3">this</span><span class="s4">);</span>
+        <span class="s2">characterIdle </span><span class="s4">= </span><span class="s3">new </span><span class="s2">Animation</span><span class="s4">(</span><span class="s7">&quot;./characterAnims/idle&quot;</span><span class="s4">, </span><span class="s6">3</span><span class="s4">, </span><span class="s3">this</span><span class="s4">);</span>
+
+        <span class="s5">// Nustatome pradinę charakterio poziciją</span>
+        <span class="s2">characterX </span><span class="s4">= </span><span class="s2">startX</span><span class="s4">;</span>
+        <span class="s2">characterY </span><span class="s4">= </span><span class="s2">startY</span><span class="s4">;</span>
+        <span class="s2">startingY </span><span class="s4">= </span><span class="s2">characterY</span><span class="s4">;</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Sugeneruoja žemėlapį pagal dabartinį lygį. Naudoja JSON failus, kuriuose aprašytos plytelių pozicijos.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">generateMap</span><span class="s4">() {</span>
+        <span class="s2">JSONObject mapJson</span><span class="s4">;</span>
+
+        <span class="s3">switch</span><span class="s4">(</span><span class="s2">level</span><span class="s4">){</span>
+            <span class="s3">case </span><span class="s6">1</span><span class="s4">:</span>
+                <span class="s2">mapJson </span><span class="s4">= </span><span class="s2">loadJSONObject</span><span class="s4">(</span><span class="s7">&quot;map1.json&quot;</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+            <span class="s3">case </span><span class="s6">2</span><span class="s4">:</span>
+                <span class="s2">mapJson </span><span class="s4">= </span><span class="s2">loadJSONObject</span><span class="s4">(</span><span class="s7">&quot;map2.json&quot;</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+            <span class="s3">case </span><span class="s6">3</span><span class="s4">:</span>
+                <span class="s2">mapJson </span><span class="s4">= </span><span class="s2">loadJSONObject</span><span class="s4">(</span><span class="s7">&quot;map3.json&quot;</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+            <span class="s3">default</span><span class="s4">:</span>
+                <span class="s2">mapJson </span><span class="s4">= </span><span class="s2">loadJSONObject</span><span class="s4">(</span><span class="s7">&quot;map1.json&quot;</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+        <span class="s4">}</span>
+
+        <span class="s2">JSONArray layers </span><span class="s4">= </span><span class="s2">mapJson</span><span class="s4">.</span><span class="s2">getJSONArray</span><span class="s4">(</span><span class="s7">&quot;layers&quot;</span><span class="s4">);</span>
+        <span class="s2">JSONObject firstLayer </span><span class="s4">= </span><span class="s2">layers</span><span class="s4">.</span><span class="s2">getJSONObject</span><span class="s4">(</span><span class="s6">0</span><span class="s4">);</span>
+        <span class="s2">JSONArray tiles </span><span class="s4">= </span><span class="s2">firstLayer</span><span class="s4">.</span><span class="s2">getJSONArray</span><span class="s4">(</span><span class="s7">&quot;tiles&quot;</span><span class="s4">);</span>
+
+        <span class="s5">// Užpildo žemėlapio masyvą pagal JSON duomenis</span>
+        <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">i </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">i </span><span class="s4">&lt; </span><span class="s2">tiles</span><span class="s4">.</span><span class="s2">size</span><span class="s4">(); </span><span class="s2">i</span><span class="s4">++){</span>
+            <span class="s2">JSONObject tile </span><span class="s4">= </span><span class="s2">tiles</span><span class="s4">.</span><span class="s2">getJSONObject</span><span class="s4">(</span><span class="s2">i</span><span class="s4">);</span>
+            <span class="s3">int </span><span class="s2">tileId </span><span class="s4">= </span><span class="s2">tile</span><span class="s4">.</span><span class="s2">getInt</span><span class="s4">(</span><span class="s7">&quot;id&quot;</span><span class="s4">);</span>
+            <span class="s3">int </span><span class="s2">x </span><span class="s4">= </span><span class="s2">tile</span><span class="s4">.</span><span class="s2">getInt</span><span class="s4">(</span><span class="s7">&quot;x&quot;</span><span class="s4">);</span>
+            <span class="s3">int </span><span class="s2">y </span><span class="s4">= </span><span class="s2">tile</span><span class="s4">.</span><span class="s2">getInt</span><span class="s4">(</span><span class="s7">&quot;y&quot;</span><span class="s4">);</span>
+            <span class="s2">map</span><span class="s4">[</span><span class="s2">y</span><span class="s4">][</span><span class="s2">x</span><span class="s4">] = </span><span class="s2">tileId</span><span class="s4">;</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Pagrindinė piešimo funkcija, kuri nuolat atnaujina žaidimo ekraną.</span>
+     <span class="s0">*/</span>
+    <span class="s3">public void </span><span class="s2">draw</span><span class="s4">() {</span>
+        <span class="s2">background</span><span class="s4">(</span><span class="s6">125</span><span class="s4">, </span><span class="s6">175</span><span class="s4">, </span><span class="s6">225</span><span class="s4">);</span>
+
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">editor</span><span class="s4">){</span>
+            <span class="s2">drawEditor</span><span class="s4">();</span>
+
+            <span class="s5">// Jei pele paspausta, atnaujiname žemėlapį arba plytelių paletę</span>
+            <span class="s3">if</span><span class="s4">(</span><span class="s2">mousePressed</span><span class="s4">){</span>
+                <span class="s3">int </span><span class="s2">x </span><span class="s4">= </span><span class="s2">mouseX</span><span class="s4">;</span>
+                <span class="s3">int </span><span class="s2">y </span><span class="s4">= </span><span class="s2">mouseY</span><span class="s4">;</span>
+
+                <span class="s3">if</span><span class="s4">(</span><span class="s2">x </span><span class="s4">&gt;= </span><span class="s2">GRID_OFFSET_X </span><span class="s4">&amp;&amp; </span><span class="s2">x </span><span class="s4">&lt;= </span><span class="s2">map</span><span class="s4">[</span><span class="s6">0</span><span class="s4">].</span><span class="s2">length </span><span class="s4">* </span><span class="s2">editorTileW </span><span class="s4">+ </span><span class="s2">GRID_OFFSET_X </span><span class="s4">&amp;&amp; </span><span class="s2">y </span><span class="s4">&gt; </span><span class="s2">GRID_OFFSET_Y </span><span class="s4">&amp;&amp; </span><span class="s2">y </span><span class="s4">&lt; </span><span class="s2">map</span><span class="s4">.</span><span class="s2">length </span><span class="s4">* </span><span class="s2">editorTileH </span><span class="s4">+ </span><span class="s2">GRID_OFFSET_Y</span><span class="s4">){</span>
+                    <span class="s2">map</span><span class="s4">[(</span><span class="s2">y </span><span class="s4">- </span><span class="s2">GRID_OFFSET_Y</span><span class="s4">) / </span><span class="s2">editorTileW</span><span class="s4">][(</span><span class="s2">x </span><span class="s4">- </span><span class="s2">GRID_OFFSET_X</span><span class="s4">) / </span><span class="s2">editorTileH</span><span class="s4">] = </span><span class="s2">selectedTile</span><span class="s4">;</span>
+                <span class="s4">}</span>
+
+                <span class="s3">if</span><span class="s4">(</span><span class="s2">x </span><span class="s4">&gt;= </span><span class="s2">TILE_PALLET_OFFSET_X </span><span class="s4">&amp;&amp; </span><span class="s2">x </span><span class="s4">&lt;= </span><span class="s2">images</span><span class="s4">.</span><span class="s2">length </span><span class="s4">* </span><span class="s2">tileW </span><span class="s4">&amp;&amp; </span><span class="s2">y </span><span class="s4">&gt; </span><span class="s2">TILE_PALLET_OFFSET_Y </span><span class="s4">&amp;&amp; </span><span class="s2">y </span><span class="s4">&lt; </span><span class="s2">TILE_PALLET_OFFSET_Y </span><span class="s4">+ </span><span class="s2">tileH</span><span class="s4">){</span>
+                    <span class="s2">selectedTile </span><span class="s4">= (</span><span class="s2">x </span><span class="s4">- </span><span class="s2">TILE_PALLET_OFFSET_X</span><span class="s4">) / </span><span class="s2">tileW</span><span class="s4">;</span>
+                <span class="s4">}</span>
+            <span class="s4">}</span>
+        <span class="s4">}</span>
+        <span class="s3">else </span><span class="s4">{</span>
+            <span class="s5">// Kameros pozicijos skaičiavimas pagal charakterio poziciją</span>
+            <span class="s3">int </span><span class="s2">camX </span><span class="s4">= </span><span class="s2">characterX </span><span class="s4">- </span><span class="s2">screenWidth </span><span class="s4">/ </span><span class="s6">2</span><span class="s4">;</span>
+            <span class="s3">int </span><span class="s2">camY </span><span class="s4">= </span><span class="s2">characterY </span><span class="s4">- </span><span class="s2">screenHeight </span><span class="s4">/ </span><span class="s6">2</span><span class="s4">;</span>
+
+            <span class="s2">camX </span><span class="s4">= </span><span class="s2">constrain</span><span class="s4">(</span><span class="s2">camX</span><span class="s4">, </span><span class="s6">0</span><span class="s4">, </span><span class="s2">screenWidth</span><span class="s4">);</span>
+            <span class="s2">camY </span><span class="s4">= </span><span class="s2">constrain</span><span class="s4">(</span><span class="s2">camY</span><span class="s4">, </span><span class="s6">0</span><span class="s4">, </span><span class="s2">screenHeight</span><span class="s4">);</span>
+
+            <span class="s2">pushMatrix</span><span class="s4">();</span>
+            <span class="s2">translate</span><span class="s4">(-</span><span class="s2">camX</span><span class="s4">, -</span><span class="s2">camY</span><span class="s4">);</span>
+
+            <span class="s2">drawMap</span><span class="s4">();</span>
+            <span class="s2">drawCharacter</span><span class="s4">();</span>
+            <span class="s2">respawn </span><span class="s4">= </span><span class="s3">false</span><span class="s4">;</span>
+
+            <span class="s2">popMatrix</span><span class="s4">();</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Nupiešia žemėlapį, pereidamas per visus žemėlapio elementus ir išvedant atitinkamą plytelės paveikslėlį.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">drawMap</span><span class="s4">() {</span>
+        <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">i </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">i </span><span class="s4">&lt; </span><span class="s2">map</span><span class="s4">.</span><span class="s2">length</span><span class="s4">; </span><span class="s2">i</span><span class="s4">++) {</span>
+            <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">j </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">j </span><span class="s4">&lt; </span><span class="s2">map</span><span class="s4">[</span><span class="s2">i</span><span class="s4">].</span><span class="s2">length</span><span class="s4">; </span><span class="s2">j</span><span class="s4">++) {</span>
+                <span class="s2">image</span><span class="s4">(</span><span class="s2">images</span><span class="s4">[</span><span class="s2">map</span><span class="s4">[</span><span class="s2">i</span><span class="s4">][</span><span class="s2">j</span><span class="s4">]], </span><span class="s2">j </span><span class="s4">* </span><span class="s2">tileW</span><span class="s4">, </span><span class="s2">i </span><span class="s4">* </span><span class="s2">tileH</span><span class="s4">, </span><span class="s2">tileW</span><span class="s4">, </span><span class="s2">tileH</span><span class="s4">);</span>
+            <span class="s4">}</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Nupiešia redaktoriaus sąsają, įskaitant tinklelį, plytelių paletę bei dabartinę pasirinktos plytelės išvaizdą.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">drawEditor</span><span class="s4">() {</span>
+        <span class="s2">grid</span><span class="s4">();</span>
+
+        <span class="s5">// Piešia plytelių paletę</span>
+        <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">i </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">i </span><span class="s4">&lt; </span><span class="s2">images</span><span class="s4">.</span><span class="s2">length</span><span class="s4">; </span><span class="s2">i</span><span class="s4">++){</span>
+            <span class="s2">image</span><span class="s4">(</span><span class="s2">images</span><span class="s4">[</span><span class="s2">i</span><span class="s4">], </span><span class="s2">i </span><span class="s4">* </span><span class="s2">tileW </span><span class="s4">+ </span><span class="s2">TILE_PALLET_OFFSET_X</span><span class="s4">, </span><span class="s2">TILE_PALLET_OFFSET_Y</span><span class="s4">, </span><span class="s2">tileW</span><span class="s4">, </span><span class="s2">tileH</span><span class="s4">);</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Piešia mažą žemėlapio peržiūrą</span>
+        <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">i </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">i </span><span class="s4">&lt; </span><span class="s2">map</span><span class="s4">.</span><span class="s2">length</span><span class="s4">; </span><span class="s2">i</span><span class="s4">++) {</span>
+            <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">j </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">j </span><span class="s4">&lt; </span><span class="s2">map</span><span class="s4">[</span><span class="s2">i</span><span class="s4">].</span><span class="s2">length</span><span class="s4">; </span><span class="s2">j</span><span class="s4">++){</span>
+                <span class="s2">image</span><span class="s4">(</span><span class="s2">images</span><span class="s4">[</span><span class="s2">map</span><span class="s4">[</span><span class="s2">i</span><span class="s4">][</span><span class="s2">j</span><span class="s4">]], </span><span class="s2">j </span><span class="s4">* </span><span class="s2">editorTileW </span><span class="s4">+ </span><span class="s2">GRID_OFFSET_X</span><span class="s4">, </span><span class="s2">i </span><span class="s4">* </span><span class="s2">editorTileH </span><span class="s4">+ </span><span class="s2">GRID_OFFSET_Y</span><span class="s4">, </span><span class="s2">editorTileW</span><span class="s4">, </span><span class="s2">editorTileH</span><span class="s4">);</span>
+            <span class="s4">}</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Paryškiname pasirinktos plytelės langelį</span>
+        <span class="s2">image</span><span class="s4">(</span><span class="s2">images</span><span class="s4">[</span><span class="s2">selectedTile</span><span class="s4">], </span><span class="s6">650</span><span class="s4">, </span><span class="s2">tileH</span><span class="s4">, </span><span class="s2">tileW </span><span class="s4">* </span><span class="s6">2</span><span class="s4">, </span><span class="s2">tileH </span><span class="s4">* </span><span class="s6">2</span><span class="s4">);</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Nupiešia tinklelį redaktoriaus lange, skirtą plytelių paletei ir žemėlapiui.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">grid</span><span class="s4">() {</span>
+        <span class="s5">// Tinklelio piešimas plytelių paletėje</span>
+        <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">i </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">i </span><span class="s4">&lt; </span><span class="s2">images</span><span class="s4">.</span><span class="s2">length</span><span class="s4">; </span><span class="s2">i</span><span class="s4">++){</span>
+            <span class="s2">rect</span><span class="s4">(</span><span class="s2">i </span><span class="s4">* </span><span class="s2">tileW </span><span class="s4">+ </span><span class="s2">TILE_PALLET_OFFSET_X</span><span class="s4">, </span><span class="s2">TILE_PALLET_OFFSET_Y</span><span class="s4">, </span><span class="s2">tileW</span><span class="s4">, </span><span class="s2">tileH</span><span class="s4">);</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Tinklelio piešimas žemėlapiui</span>
+        <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">i </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">i </span><span class="s4">&lt; </span><span class="s2">map</span><span class="s4">.</span><span class="s2">length</span><span class="s4">; </span><span class="s2">i</span><span class="s4">++){</span>
+            <span class="s3">for</span><span class="s4">(</span><span class="s3">int </span><span class="s2">j </span><span class="s4">= </span><span class="s6">0</span><span class="s4">; </span><span class="s2">j </span><span class="s4">&lt; </span><span class="s2">map</span><span class="s4">[</span><span class="s2">i</span><span class="s4">].</span><span class="s2">length</span><span class="s4">; </span><span class="s2">j</span><span class="s4">++){</span>
+                <span class="s2">rect</span><span class="s4">(</span><span class="s2">j </span><span class="s4">* </span><span class="s2">editorTileW </span><span class="s4">+ </span><span class="s2">GRID_OFFSET_X</span><span class="s4">, </span><span class="s2">i </span><span class="s4">* </span><span class="s2">editorTileH </span><span class="s4">+ </span><span class="s2">GRID_OFFSET_Y</span><span class="s4">, </span><span class="s2">editorTileW</span><span class="s4">, </span><span class="s2">editorTileH</span><span class="s4">);</span>
+            <span class="s4">}</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Rodyti paryškinamą plyteles dėžutę</span>
+        <span class="s2">rect</span><span class="s4">(</span><span class="s6">650</span><span class="s4">, </span><span class="s2">tileH</span><span class="s4">, </span><span class="s2">tileW </span><span class="s4">* </span><span class="s6">2</span><span class="s4">, </span><span class="s2">tileH </span><span class="s4">* </span><span class="s6">2</span><span class="s4">);</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Nupiešia charakterį ir atnaujina jo animaciją bei poziciją, atsižvelgiant į judėjimo greičius ir</span>
+     <span class="s0">* sąveiką su aplinka.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">drawCharacter</span><span class="s4">() {</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">velocityX </span><span class="s4">== </span><span class="s6">0 </span><span class="s4">&amp;&amp; </span><span class="s2">characterStatus </span><span class="s4">!= </span><span class="s6">3</span><span class="s4">){</span>
+            <span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Pasirenkame animaciją pagal charakterio būseną</span>
+        <span class="s3">switch</span><span class="s4">(</span><span class="s2">characterStatus</span><span class="s4">){</span>
+            <span class="s3">case </span><span class="s6">0</span><span class="s4">:</span>
+                <span class="s2">displayCharacter</span><span class="s4">(</span><span class="s2">characterIdle</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+            <span class="s3">case </span><span class="s6">1</span><span class="s4">:</span>
+                <span class="s2">displayCharacter</span><span class="s4">(</span><span class="s2">characterWalkLeft</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+            <span class="s3">case </span><span class="s6">2</span><span class="s4">:</span>
+                <span class="s2">displayCharacter</span><span class="s4">(</span><span class="s2">characterWalkRight</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+            <span class="s3">case </span><span class="s6">3</span><span class="s4">:</span>
+                <span class="s5">// Žingsniuoja pakilimo metu</span>
+                <span class="s2">velocityY </span><span class="s4">+= </span><span class="s6">1</span><span class="s4">;</span>
+                <span class="s2">displayCharacter</span><span class="s4">(</span><span class="s2">characterJump</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+            <span class="s3">default</span><span class="s4">:</span>
+                <span class="s2">displayCharacter</span><span class="s4">(</span><span class="s2">characterIdle</span><span class="s4">);</span>
+                <span class="s3">break</span><span class="s4">;</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Skaičiuojame būsimas charakterio pozicijas</span>
+        <span class="s3">int </span><span class="s2">nextX </span><span class="s4">= </span><span class="s2">characterX </span><span class="s4">+ </span><span class="s2">velocityX</span><span class="s4">;</span>
+        <span class="s3">int </span><span class="s2">nextY </span><span class="s4">= </span><span class="s2">characterY </span><span class="s4">+ </span><span class="s2">velocityY</span><span class="s4">;</span>
+
+        <span class="s2">checkCollision</span><span class="s4">(</span><span class="s2">nextX</span><span class="s4">, </span><span class="s2">nextY</span><span class="s4">);</span>
+
+        <span class="s2">characterX </span><span class="s4">+= </span><span class="s2">velocityX</span><span class="s4">;</span>
+        <span class="s2">characterY </span><span class="s4">+= </span><span class="s2">velocityY</span><span class="s4">;</span>
+
+        <span class="s5">// Stabilizuoja charakterio poziciją kai jis nebėra ore</span>
+        <span class="s3">if </span><span class="s4">((</span><span class="s2">nextY </span><span class="s4">+ </span><span class="s2">characterH</span><span class="s4">) / </span><span class="s2">tileH </span><span class="s4">!= </span><span class="s2">map</span><span class="s4">.</span><span class="s2">length </span><span class="s4">&amp;&amp; (</span><span class="s2">characterY </span><span class="s4">&gt;= </span><span class="s2">startingY </span><span class="s4">|| (</span><span class="s2">map</span><span class="s4">[(</span><span class="s2">nextY </span><span class="s4">+ </span><span class="s2">characterH</span><span class="s4">) / </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">characterX </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">] == </span><span class="s2">BORDER</span><span class="s4">)) &amp;&amp; </span><span class="s2">characterStatus </span><span class="s4">== </span><span class="s6">3</span><span class="s4">) {</span>
+            <span class="s2">velocityY </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+
+            <span class="s3">if</span><span class="s4">(</span><span class="s2">characterY </span><span class="s4">&gt;= </span><span class="s2">startingY</span><span class="s4">){</span>
+                <span class="s2">characterY </span><span class="s4">= </span><span class="s2">startingY</span><span class="s4">;</span>
+            <span class="s4">}</span>
+            <span class="s3">else </span><span class="s4">{</span>
+                <span class="s2">characterY </span><span class="s4">= </span><span class="s2">nextY</span><span class="s4">;</span>
+            <span class="s4">}</span>
+
+            <span class="s3">if</span><span class="s4">(</span><span class="s2">velocityX </span><span class="s4">&lt; </span><span class="s6">0</span><span class="s4">) {</span>
+                <span class="s2">velocityX </span><span class="s4">= -</span><span class="s2">stepSize</span><span class="s4">;</span>
+                <span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">2</span><span class="s4">;</span>
+            <span class="s4">}</span>
+            <span class="s3">else if</span><span class="s4">(</span><span class="s2">velocityX </span><span class="s4">&gt; </span><span class="s6">0</span><span class="s4">){</span>
+                <span class="s2">velocityX </span><span class="s4">= </span><span class="s2">stepSize</span><span class="s4">;</span>
+                <span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">1</span><span class="s4">;</span>
+            <span class="s4">}</span>
+            <span class="s3">else </span><span class="s4">{</span>
+                <span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+            <span class="s4">}</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Atvaizduoja charakterio animaciją pagal nurodytą Animation objektą.</span>
+     <span class="s0">*</span>
+     <span class="s0">* </span><span class="s1">@param </span><span class="s0">anim Animation objektas, kurio rėžiai bus atvaizduojami.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">displayCharacter</span><span class="s4">(</span><span class="s2">Animation anim</span><span class="s4">) {</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">millis</span><span class="s4">() - </span><span class="s2">animTimer </span><span class="s4">&gt; </span><span class="s2">ANIM_FREQUENCY</span><span class="s4">) {</span>
+            <span class="s2">anim</span><span class="s4">.</span><span class="s2">frame </span><span class="s4">= (</span><span class="s2">anim</span><span class="s4">.</span><span class="s2">frame </span><span class="s4">+ </span><span class="s6">1</span><span class="s4">) % </span><span class="s2">anim</span><span class="s4">.</span><span class="s2">imageCount</span><span class="s4">;</span>
+            <span class="s2">animTimer </span><span class="s4">= </span><span class="s2">millis</span><span class="s4">();</span>
+        <span class="s4">}</span>
+        <span class="s2">image</span><span class="s4">(</span><span class="s2">anim</span><span class="s4">.</span><span class="s2">images</span><span class="s4">[</span><span class="s2">anim</span><span class="s4">.</span><span class="s2">frame</span><span class="s4">], </span><span class="s2">characterX</span><span class="s4">, </span><span class="s2">characterY</span><span class="s4">);</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Tikrina, ar charakteris nesusiduria su kliūtimis, ribomis ar specialiais elementais (pvz., spygliuota plytelių).</span>
+     <span class="s0">*</span>
+     <span class="s0">* </span><span class="s1">@param </span><span class="s0">nextX Planuojama charakterio X koordinatė.</span>
+     <span class="s0">* </span><span class="s1">@param </span><span class="s0">nextY Planuojama charakterio Y koordinatė.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">checkCollision</span><span class="s4">(</span><span class="s3">int </span><span class="s2">nextX</span><span class="s4">, </span><span class="s3">int </span><span class="s2">nextY</span><span class="s4">) {</span>
+        <span class="s3">int </span><span class="s2">leftTile </span><span class="s4">= </span><span class="s2">nextX </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">;</span>
+        <span class="s3">int </span><span class="s2">rightTile </span><span class="s4">= (</span><span class="s2">nextX </span><span class="s4">+ </span><span class="s2">characterW</span><span class="s4">) / </span><span class="s2">tileW</span><span class="s4">;</span>
+        <span class="s3">int </span><span class="s2">topTile </span><span class="s4">= </span><span class="s2">nextY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">;</span>
+        <span class="s3">int </span><span class="s2">bottomTile </span><span class="s4">= (</span><span class="s2">nextY </span><span class="s4">+ </span><span class="s2">characterH</span><span class="s4">) / </span><span class="s2">tileH</span><span class="s4">;</span>
+
+        <span class="s5">// Tikriname ar charakteris neperslinko į ekrano ribas</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">characterY </span><span class="s4">&gt;= </span><span class="s6">1024</span><span class="s4">){</span>
+            <span class="s2">velocityY </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+            <span class="s2">characterY </span><span class="s4">= </span><span class="s6">1024</span><span class="s4">;</span>
+        <span class="s4">}</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">characterY </span><span class="s4">&lt; </span><span class="s6">0</span><span class="s4">){</span>
+            <span class="s2">velocityY </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+            <span class="s2">characterY </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">characterX </span><span class="s4">&gt;= </span><span class="s6">1536</span><span class="s4">){</span>
+            <span class="s2">characterX </span><span class="s4">= </span><span class="s6">1536</span><span class="s4">;</span>
+            <span class="s2">velocityX </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">characterX </span><span class="s4">&lt; </span><span class="s6">0</span><span class="s4">){</span>
+            <span class="s2">characterX </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+            <span class="s2">velocityX </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Sustabdo judėjimą jei pasiekiamos ribos ar platformos šonai</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">map</span><span class="s4">[</span><span class="s2">characterY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">leftTile</span><span class="s4">] == </span><span class="s2">BORDER </span><span class="s4">|| </span><span class="s2">map</span><span class="s4">[</span><span class="s2">characterY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">rightTile</span><span class="s4">] == </span><span class="s2">BORDER</span><span class="s4">){</span>
+            <span class="s2">velocityX </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Paleidžia iš naujo, jei pataikoma į spygliuotą plytelę</span>
+        <span class="s3">if </span><span class="s4">(</span><span class="s2">map</span><span class="s4">[</span><span class="s2">characterY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">leftTile</span><span class="s4">] == </span><span class="s2">SPIKE_BOTTOM </span><span class="s4">|| </span><span class="s2">map</span><span class="s4">[</span><span class="s2">characterY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">rightTile</span><span class="s4">] == </span><span class="s2">SPIKE_BOTTOM </span><span class="s4">||</span>
+                <span class="s2">map</span><span class="s4">[</span><span class="s2">characterY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">leftTile</span><span class="s4">] == </span><span class="s2">SPIKE_TOP </span><span class="s4">|| </span><span class="s2">map</span><span class="s4">[</span><span class="s2">characterY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">rightTile</span><span class="s4">] == </span><span class="s2">SPIKE_TOP</span><span class="s4">){</span>
+            <span class="s2">resetCharacter</span><span class="s4">();</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Sustabdo judėjimą aukštyn, jei yra kliūtis viršuje</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">topTile </span><span class="s4">== </span><span class="s2">map</span><span class="s4">.</span><span class="s2">length </span><span class="s4">|| </span><span class="s2">map</span><span class="s4">[</span><span class="s2">topTile</span><span class="s4">][</span><span class="s2">characterX </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">] == </span><span class="s2">BORDER</span><span class="s4">){</span>
+            <span class="s2">velocityY </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Sustabdo judėjimą žemyn, jei apačioje yra riba, išskyrus šuolio atvejus</span>
+        <span class="s3">if</span><span class="s4">((</span><span class="s2">bottomTile </span><span class="s4">&gt;= </span><span class="s2">map</span><span class="s4">.</span><span class="s2">length </span><span class="s4">|| </span><span class="s2">map</span><span class="s4">[</span><span class="s2">bottomTile</span><span class="s4">][</span><span class="s2">characterX </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">] == </span><span class="s2">BORDER</span><span class="s4">) &amp;&amp; </span><span class="s2">characterStatus </span><span class="s4">!= </span><span class="s6">3</span><span class="s4">){</span>
+            <span class="s2">velocityY </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+        <span class="s5">// Jei po charakteriu yra tuščia vieta, pradeda kristi (nebūna šuolio režime)</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">bottomTile </span><span class="s4">&lt; </span><span class="s2">map</span><span class="s4">.</span><span class="s2">length </span><span class="s4">&amp;&amp; </span><span class="s2">map</span><span class="s4">[</span><span class="s2">bottomTile</span><span class="s4">][</span><span class="s2">characterX </span><span class="s4">/ </span><span class="s2">tileW</span><span class="s4">] == </span><span class="s2">AIR </span><span class="s4">&amp;&amp; </span><span class="s2">characterStatus </span><span class="s4">!= </span><span class="s6">3 </span><span class="s4">&amp;&amp; !</span><span class="s2">respawn</span><span class="s4">){</span>
+            <span class="s2">velocityY </span><span class="s4">= </span><span class="s6">16</span><span class="s4">;</span>
+        <span class="s4">}</span>
+
+        <span class="s5">// Keičia lygį, jei susiduriama su ženklu</span>
+        <span class="s3">if</span><span class="s4">(</span><span class="s2">map</span><span class="s4">[</span><span class="s2">characterY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">leftTile</span><span class="s4">] == </span><span class="s2">SIGN </span><span class="s4">|| </span><span class="s2">map</span><span class="s4">[</span><span class="s2">characterY </span><span class="s4">/ </span><span class="s2">tileH</span><span class="s4">][</span><span class="s2">rightTile</span><span class="s4">] == </span><span class="s2">SIGN</span><span class="s4">){</span>
+            <span class="s2">changeLevel</span><span class="s4">();</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Nustato charakterį į pradinę poziciją po mirties ar lygio keitimo.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">resetCharacter</span><span class="s4">(){</span>
+        <span class="s2">respawn </span><span class="s4">= </span><span class="s3">true</span><span class="s4">;</span>
+        <span class="s2">characterX </span><span class="s4">= </span><span class="s2">startX</span><span class="s4">;</span>
+        <span class="s2">characterY </span><span class="s4">= </span><span class="s2">startY</span><span class="s4">;</span>
+        <span class="s2">startingY </span><span class="s4">= </span><span class="s2">characterY</span><span class="s4">;</span>
+        <span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s2">velocityY </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s2">velocityX </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Keičia lygį ir atnaujina žemėlapį bei charakterio poziciją.</span>
+     <span class="s0">*/</span>
+    <span class="s3">private void </span><span class="s2">changeLevel</span><span class="s4">(){</span>
+        <span class="s2">level</span><span class="s4">++;</span>
+        <span class="s2">generateMap</span><span class="s4">();</span>
+        <span class="s2">resetCharacter</span><span class="s4">();</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Apdoroja klaviatūros paspaudimo įvykius.</span>
+     <span class="s0">* Skirtas judėti į šoną, šokti ir įjungti/redaguoti redaktoriaus režimą.</span>
+     <span class="s0">*/</span>
+    <span class="s3">public void </span><span class="s2">keyPressed</span><span class="s4">() {</span>
+        <span class="s5">// Šuolis su tarpu, kai nėra jau ore ir redaktoriaus režime</span>
+        <span class="s3">if </span><span class="s4">(</span><span class="s2">key </span><span class="s4">== </span><span class="s7">' ' </span><span class="s4">&amp;&amp; </span><span class="s2">characterStatus </span><span class="s4">!= </span><span class="s6">3 </span><span class="s4">&amp;&amp; !</span><span class="s2">editor</span><span class="s4">) {</span>
+            <span class="s3">if </span><span class="s4">(</span><span class="s2">characterStatus </span><span class="s4">== </span><span class="s6">1</span><span class="s4">) {</span>
+                <span class="s2">velocityX </span><span class="s4">+= </span><span class="s2">jumpStepSize</span><span class="s4">;</span>
+            <span class="s4">} </span><span class="s3">else if </span><span class="s4">(</span><span class="s2">characterStatus </span><span class="s4">== </span><span class="s6">2</span><span class="s4">) {</span>
+                <span class="s2">velocityX </span><span class="s4">+= -</span><span class="s2">jumpStepSize</span><span class="s4">;</span>
+            <span class="s4">}</span>
+            <span class="s2">velocityY </span><span class="s4">= -</span><span class="s6">32</span><span class="s4">;</span>
+            <span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">3</span><span class="s4">;</span>
+            <span class="s2">startingY </span><span class="s4">= </span><span class="s2">characterY</span><span class="s4">;</span>
+        <span class="s4">}</span>
+        <span class="s5">// Judėjimas į kairę</span>
+        <span class="s3">if </span><span class="s4">(</span><span class="s2">key </span><span class="s4">== </span><span class="s7">'a' </span><span class="s4">&amp;&amp; </span><span class="s2">characterStatus </span><span class="s4">!= </span><span class="s6">3 </span><span class="s4">&amp;&amp; !</span><span class="s2">editor</span><span class="s4">) {</span>
+            <span class="s2">velocityX </span><span class="s4">= -</span><span class="s2">stepSize</span><span class="s4">;</span>
+            <span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">2</span><span class="s4">;</span>
+        <span class="s4">}</span>
+        <span class="s5">// Judėjimas į dešinę</span>
+        <span class="s3">if </span><span class="s4">(</span><span class="s2">key </span><span class="s4">== </span><span class="s7">'d' </span><span class="s4">&amp;&amp; </span><span class="s2">characterStatus </span><span class="s4">!= </span><span class="s6">3 </span><span class="s4">&amp;&amp; !</span><span class="s2">editor</span><span class="s4">) {</span>
+            <span class="s2">velocityX </span><span class="s4">= </span><span class="s2">stepSize</span><span class="s4">;</span>
+            <span class="s2">characterStatus </span><span class="s4">= </span><span class="s6">1</span><span class="s4">;</span>
+        <span class="s4">}</span>
+        <span class="s5">// Perjungia redaktoriaus režimą</span>
+        <span class="s3">if </span><span class="s4">(</span><span class="s2">key </span><span class="s4">== </span><span class="s7">'e'</span><span class="s4">){</span>
+            <span class="s2">editor </span><span class="s4">= !</span><span class="s2">editor</span><span class="s4">;</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+
+    <span class="s0">/**</span>
+     <span class="s0">* Apdoroja klaviatūros atleidimo įvykius ir stabdo judėjimą.</span>
+     <span class="s0">*/</span>
+    <span class="s3">public void </span><span class="s2">keyReleased</span><span class="s4">() {</span>
+        <span class="s3">if </span><span class="s4">(</span><span class="s2">key </span><span class="s4">== </span><span class="s7">'a'</span><span class="s4">) {</span>
+            <span class="s2">velocityX </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+        <span class="s3">else if </span><span class="s4">(</span><span class="s2">key </span><span class="s4">== </span><span class="s7">'d'</span><span class="s4">) {</span>
+            <span class="s2">velocityX </span><span class="s4">= </span><span class="s6">0</span><span class="s4">;</span>
+        <span class="s4">}</span>
+    <span class="s4">}</span>
+<span class="s4">}</span>
+</pre>
+</body>
+</html>

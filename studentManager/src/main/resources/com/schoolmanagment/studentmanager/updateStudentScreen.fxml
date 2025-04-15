@@ -1,14 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.schoolmanagment.studentmanager.UpdateStudentScreen"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.schoolmanagment.studentmanager.controllers.UpdateStudentScreenController">
+   <children>
+      <BorderPane prefHeight="44.0" prefWidth="600.0">
+         <center>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Update Student" wrappingWidth="180.21716165542603" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </center>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <left>
+            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#onBackBtnClick" prefHeight="26.0" prefWidth="46.0" text="&lt;" BorderPane.alignment="CENTER" />
+         </left>
+      </BorderPane>
+      <GridPane maxHeight="-Infinity" prefHeight="300.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <BorderPane prefHeight="102.0" prefWidth="300.0">
+               <center>
+                  <TextField fx:id="firstNameField" prefHeight="40.0" prefWidth="280.0" BorderPane.alignment="CENTER" />
+               </center>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <right>
+                  <Region prefHeight="26.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+               </right>
+               <top>
+                  <Label prefHeight="26.0" prefWidth="280.0" text="First name" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+            <BorderPane prefHeight="102.0" prefWidth="300.0" GridPane.rowIndex="1">
+               <center>
+                  <TextField fx:id="lastNameField" prefHeight="40.0" prefWidth="380.0" BorderPane.alignment="CENTER" />
+               </center>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <top>
+                  <Label prefHeight="26.0" prefWidth="539.0" text="Last name:" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+            <BorderPane prefHeight="122.0" prefWidth="300.0" GridPane.rowIndex="2">
+               <center>
+                  <TextField fx:id="ageField" prefHeight="40.0" prefWidth="280.0" BorderPane.alignment="CENTER" />
+               </center>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <top>
+                  <Label prefHeight="26.0" prefWidth="571.0" text="Age:" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+            <BorderPane prefHeight="17.0" prefWidth="300.0" GridPane.columnIndex="1">
+               <center>
+                  <ComboBox fx:id="courseCombo" prefHeight="40.0" prefWidth="344.0" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <Label prefHeight="23.0" prefWidth="280.0" text="Student course:" BorderPane.alignment="CENTER" />
+               </top>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </BorderPane>
+            <BorderPane prefHeight="122.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <center>
+                  <TextField fx:id="customField" prefHeight="40.0" prefWidth="280.0" BorderPane.alignment="CENTER" />
+               </center>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <top>
+                  <Label fx:id="customFieldLabel" prefHeight="26.0" prefWidth="571.0" BorderPane.alignment="CENTER" />
+               </top>
+            </BorderPane>
+         </children>
+      </GridPane>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="There are errors with the form. Please fix them" textAlignment="CENTER" wrappingWidth="191.73672485351562" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </center>
+            </BorderPane>
+            <BorderPane prefHeight="90.0" prefWidth="600.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <center>
+                  <Button fx:id="studentDeleteBtn" mnemonicParsing="false" onAction="#onStudentDeleteBtnClick" prefHeight="40.0" prefWidth="329.0" style="-fx-background-color: Red;" text="Remove" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </center>
+            </BorderPane>
+            <BorderPane prefHeight="90.0" prefWidth="600.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <center>
+                  <Button fx:id="studentOperationBtn" mnemonicParsing="false" onAction="#onStudentOperationBtnClick" prefHeight="40.0" prefWidth="329.0" style="-fx-background-color: lime;" text="Update" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </center>
+            </BorderPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>

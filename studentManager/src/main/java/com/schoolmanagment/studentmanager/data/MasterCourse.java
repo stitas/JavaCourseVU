@@ -9,7 +9,6 @@ public enum MasterCourse implements Course{
     MATHEMATICS("Mathematics"),
     SOFTWARE_SYSTEMS("Software systems"),
     INTERNATIONAL_CYBERSECURITY_AND_CYBER_INTELLIGENCE("International cybersecurity and cyber intelligence");
-    ;
 
     private final String name;
 

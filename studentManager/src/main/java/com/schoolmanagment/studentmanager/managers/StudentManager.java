@@ -1,5 +1,6 @@
 package com.schoolmanagment.studentmanager.managers;
 
+import com.schoolmanagment.studentmanager.data.Course;
 import com.schoolmanagment.studentmanager.student.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,5 +35,16 @@ public class StudentManager {
 
     public void removeStudent(Student student){
         students.removeIf(stud -> stud.equals(student));
+    }
+
+    public void updateStudent(Student student, String firstName, String lastName, int age, Course course){
+        for(Student stud : students){
+            if(stud.getId() == student.getId()){
+                stud.setFirstName(firstName);
+                stud.setLastName(lastName);
+                stud.setAge(age);
+                stud.setCourse(course);
+            }
+        }
     }
 }

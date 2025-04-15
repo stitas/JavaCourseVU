@@ -11,7 +11,6 @@ public enum UndergraduateCourse implements Course {
     MATHEMATICS_EDUCATION_AND_EDUCOMETRY("Mathematics education and educometry"),
     SOFTWARE_SYSTEMS("Software systems"),
     BUSINESS_DATA_ANALYTICS("Business data analytics");
-    ;
 
     private String name;
 

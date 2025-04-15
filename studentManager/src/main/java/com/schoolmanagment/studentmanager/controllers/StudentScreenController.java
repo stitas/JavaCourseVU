@@ -31,8 +31,6 @@ public class StudentScreenController extends TableScreenController{
     private void initialize(){
         pushPreviousScreen();
         StudentManager studentManager = StudentManager.getInstance();
-        studentManager.addStudent(new UndergraduateStudent("Titas", "Stongvila", 19, UndergraduateCourse.SOFTWARE_SYSTEMS, 1));
-        studentManager.addStudent(new MasterStudent("Monstras", "Monstrauskas", 15, MasterCourse.COMPUTER_MODELING, "Robotics"));
 
         filteredData = studentManager.getStudentsFilteredList();
 
@@ -82,7 +80,22 @@ public class StudentScreenController extends TableScreenController{
 
     @Override
     public void onUpdateBtnClick() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/schoolmanagment/studentmanager/updateStudentScreen.fxml"));
+            Parent studentScene = loader.load();
 
+            UpdateStudentScreenController controller = loader.getController();
+            controller.initData(table.getSelectionModel().getSelectedItem());
+
+            // Get current stage
+            Stage currentStage = (Stage) addBtn.getScene().getWindow();
+
+            currentStage.setScene(new Scene(studentScene));
+        }
+        // Do nothing if user has not selected student from the table
+        catch (NullPointerException e) {
+            return;
+        }
     }
 
     @Override

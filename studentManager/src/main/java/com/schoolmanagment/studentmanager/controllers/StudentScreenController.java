@@ -1,36 +1,27 @@
 package com.schoolmanagment.studentmanager.controllers;
 
+import com.schoolmanagment.studentmanager.Main;
 import com.schoolmanagment.studentmanager.data.MasterCourse;
 import com.schoolmanagment.studentmanager.data.UndergraduateCourse;
 import com.schoolmanagment.studentmanager.managers.StudentManager;
 import com.schoolmanagment.studentmanager.student.MasterStudent;
 import com.schoolmanagment.studentmanager.student.Student;
 import com.schoolmanagment.studentmanager.student.UndergraduateStudent;
-import javafx.beans.Observable;
-import javafx.beans.binding.ObjectExpression;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-public class StudentScreenController {
+import java.io.IOException;
+
+public class StudentScreenController extends TableScreenController{
     @FXML
-    public TableView<Student> studentTable;
     public TableColumn<Student, Integer> idCol, ageCol;
     public TableColumn<Student, String> firstNameCol, lastNameCol, degreeCol, courseCol;
-
-    @FXML
-    private TextField filterField;
-
-    @FXML
-    private Button backBtn, addStudentBtn, updateStudentBtn;
 
     FilteredList<Student> filteredData;
 
@@ -42,7 +33,7 @@ public class StudentScreenController {
 
         filteredData = studentManager.getStudentsFilteredList();
 
-        studentTable.setItems(filteredData);
+        table.setItems(filteredData);
 
         idCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         ageCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAge()).asObject());
@@ -74,5 +65,21 @@ public class StudentScreenController {
             return fullName.toLowerCase().startsWith(text.toLowerCase()) ||
                     student.getLastName().toLowerCase().startsWith(text.toLowerCase());
         });
+    }
+
+    @Override
+    public void onAddBtnClick() throws IOException {
+        Stage newStage = new Stage();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/schoolmanagment/studentmanager/addStudentScreen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        newStage.setTitle("Add Student");
+        newStage.setScene(scene);
+        newStage.show();
+    }
+
+    @Override
+    public void onUpdateBtnClick() throws IOException {
+
     }
 }

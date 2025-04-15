@@ -9,10 +9,17 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
+import java.util.Optional;
 
 public class GroupScreenController extends TableScreenController{
     @FXML
@@ -29,8 +36,6 @@ public class GroupScreenController extends TableScreenController{
         EnrollmentManager enrollmentManager = EnrollmentManager.getInstance();
         GroupManager groupManager = GroupManager.getInstance();
 
-        groupManager.addGroup(new Group("Discrete mathematics"));
-
         filteredData = groupManager.getGroupFilteredList();
 
         idCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
@@ -38,6 +43,7 @@ public class GroupScreenController extends TableScreenController{
         nameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 
         table.setItems(filteredData);
+        filterField.textProperty().addListener(e -> applyFilter());
     }
 
     @Override
@@ -49,12 +55,35 @@ public class GroupScreenController extends TableScreenController{
 
     @Override
     public void onAddBtnClick() throws IOException {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Create group");
+        dialog.setHeaderText("Create group");
 
+        GroupManager groupManager = GroupManager.getInstance();
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(res -> groupManager.addGroup(new Group(res)));
+        table.setItems(groupManager.getGroupFilteredList());
     }
 
     @Override
     public void onUpdateBtnClick() throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/schoolmanagment/studentmanager/updateGroupScreen.fxml"));
+            Parent studentScene = loader.load();
 
+            UpdateGroupScreenController controller = loader.getController();
+            controller.initData(table.getSelectionModel().getSelectedItem());
+
+            // Get current stage
+            Stage currentStage = (Stage) updateBtn.getScene().getWindow();
+
+            currentStage.setScene(new Scene(studentScene));
+        }
+        // Do nothing if user has not selected student from the table
+        catch (NullPointerException e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     @Override

@@ -28,6 +28,14 @@ public class GroupManager {
         groups.add(group);
     }
 
+    public void updateGroup(Group group, String name){
+        for(Group gr : groups){
+            if(gr.equals(group)){
+                gr.setName(name);
+            }
+        }
+    }
+
     public FilteredList<Group> getGroupFilteredList(){
         return new FilteredList<>(FXCollections.observableList(groups));
     }

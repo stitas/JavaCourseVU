@@ -55,4 +55,26 @@ public class EnrollmentManager {
         return count;
     }
 
+    public boolean isStudentEnrolled(Group group, Student student){
+        for(Enrollment enrollment : enrollmentList){
+            if(enrollment.getGroup().equals(group) && enrollment.getStudent().equals(student)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<Student> getAllStudentsNotInGroup(Group group){
+        List<Student> notInGroup = new ArrayList<>();
+
+        for(Student student : StudentManager.getInstance().getStudents()){
+            if(!isStudentEnrolled(group, student)){
+                notInGroup.add(student);
+            }
+        }
+
+        return notInGroup;
+    }
+
 }

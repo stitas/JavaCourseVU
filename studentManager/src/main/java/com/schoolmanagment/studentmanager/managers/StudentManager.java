@@ -33,6 +33,10 @@ public class StudentManager {
         return new FilteredList<>(FXCollections.observableList(students));
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
     public void removeStudent(Student student){
         students.removeIf(stud -> stud.equals(student));
     }

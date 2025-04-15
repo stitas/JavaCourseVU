@@ -15,13 +15,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class StudentScreenController extends TableScreenController{
+
     @FXML
+    protected TableView<Student> table;
     public TableColumn<Student, Integer> idCol, ageCol;
     public TableColumn<Student, String> firstNameCol, lastNameCol, degreeCol, courseCol;
 
@@ -58,7 +61,8 @@ public class StudentScreenController extends TableScreenController{
         }
     }
 
-    private void applyFilter() {
+    @Override
+    protected void applyFilter() {
         String text = filterField.getText();
 
         filteredData.setPredicate(student -> {

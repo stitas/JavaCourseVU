@@ -23,4 +23,14 @@ public class IndexControlller {
 
         currentStage.setScene(new Scene(studentScene));
     }
+
+    @FXML
+    protected void onGroupsBtnClick() throws IOException {
+        Parent groupsScene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/schoolmanagment/studentmanager/groupsScreen.fxml")));
+
+        // Get current stage
+        Stage currentStage = (Stage) groupsBtn.getScene().getWindow();
+
+        currentStage.setScene(new Scene(groupsScene));
+    }
 }

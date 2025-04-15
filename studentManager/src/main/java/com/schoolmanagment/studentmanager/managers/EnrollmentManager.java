@@ -31,16 +31,28 @@ public class EnrollmentManager {
         enrollmentList.removeIf(enrollment -> enrollment.getStudent().equals(student) && enrollment.getGroup().equals(group));
     }
 
-    public List<Group> getStudentGroups(Student student){
-        List<Group> groups = new ArrayList<>();
+    public List<Student> getStudents(Group group){
+        List<Student> students = new ArrayList<>();
 
         for(Enrollment enrollment : enrollmentList){
-            if(enrollment.getStudent().equals(student)){
-                groups.add(enrollment.getGroup());
+            if(enrollment.getGroup().equals(group)){
+                students.add(enrollment.getStudent());
             }
         }
 
-        return groups;
+        return students;
+    }
+
+    public int getStudentCount(Group group){
+        int count = 0;
+
+        for(Enrollment enrollment : enrollmentList){
+            if(enrollment.getGroup().equals(group)){
+                count++;
+            }
+        }
+
+        return count;
     }
 
 }

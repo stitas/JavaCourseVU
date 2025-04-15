@@ -16,16 +16,12 @@ import java.util.Objects;
 
 public abstract class TableScreenController extends ChildScreenController{
     @FXML
-    protected TableView<Student> table;
-
-    @FXML
     protected TextField filterField;
 
     @FXML
     protected Button addBtn, updateBtn;
 
-    protected FilteredList<Student> filteredData;
-
+    protected abstract void applyFilter();
     public abstract void onAddBtnClick() throws IOException;
     public abstract void onUpdateBtnClick() throws IOException;
 }

@@ -13,7 +13,7 @@ public class StudentManager {
     private static StudentManager instance;
     private final List<Student> students;
 
-    public StudentManager() {
+    private StudentManager() {
         students = new ArrayList<>();
     }
 

@@ -12,11 +12,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class StudentScreenController extends TableScreenController{
     @FXML
@@ -27,6 +29,7 @@ public class StudentScreenController extends TableScreenController{
 
     @FXML
     private void initialize(){
+        pushPreviousScreen();
         StudentManager studentManager = StudentManager.getInstance();
         studentManager.addStudent(new UndergraduateStudent("Titas", "Stongvila", 19, UndergraduateCourse.SOFTWARE_SYSTEMS, 1));
         studentManager.addStudent(new MasterStudent("Monstras", "Monstrauskas", 15, MasterCourse.COMPUTER_MODELING, "Robotics"));
@@ -69,17 +72,21 @@ public class StudentScreenController extends TableScreenController{
 
     @Override
     public void onAddBtnClick() throws IOException {
-        Stage newStage = new Stage();
+        Parent studentScene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/schoolmanagment/studentmanager/addStudentScreen.fxml")));
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/schoolmanagment/studentmanager/addStudentScreen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        newStage.setTitle("Add Student");
-        newStage.setScene(scene);
-        newStage.show();
+        // Get current stage
+        Stage currentStage = (Stage) addBtn.getScene().getWindow();
+
+        currentStage.setScene(new Scene(studentScene));
     }
 
     @Override
     public void onUpdateBtnClick() throws IOException {
 
+    }
+
+    @Override
+    protected void pushPreviousScreen() {
+        previousScreen = "/com/schoolmanagment/studentmanager/index.fxml";
     }
 }

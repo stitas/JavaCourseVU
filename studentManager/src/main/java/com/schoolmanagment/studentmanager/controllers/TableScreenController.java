@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public abstract class TableScreenController {
+public abstract class TableScreenController extends ChildScreenController{
     @FXML
     protected TableView<Student> table;
 
@@ -22,19 +22,9 @@ public abstract class TableScreenController {
     protected TextField filterField;
 
     @FXML
-    protected Button backBtn, addBtn, updateBtn;
+    protected Button addBtn, updateBtn;
 
     protected FilteredList<Student> filteredData;
-
-    /** Go back to index screen on click **/
-    public void onBackBtnClick() throws IOException {
-        Parent studentScene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/schoolmanagment/studentmanager/index.fxml")));
-
-        // Get current stage
-        Stage currentStage = (Stage) backBtn.getScene().getWindow();
-
-        currentStage.setScene(new Scene(studentScene));
-    }
 
     public abstract void onAddBtnClick() throws IOException;
     public abstract void onUpdateBtnClick() throws IOException;

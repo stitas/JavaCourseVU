@@ -16,12 +16,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.schoolmanagment.studentmanager.controllers.AddStudentScreenController">
    <children>
       <BorderPane prefHeight="44.0" prefWidth="600.0">
          <center>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add student" BorderPane.alignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add student" wrappingWidth="180.21716165542603" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
@@ -30,6 +29,9 @@
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
+         <left>
+            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#onBackBtnClick" prefHeight="26.0" prefWidth="46.0" text="&lt;" BorderPane.alignment="CENTER" />
+         </left>
       </BorderPane>
       <GridPane maxHeight="-Infinity" prefHeight="300.0" prefWidth="600.0">
         <columnConstraints>
@@ -118,7 +120,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <center>
-                  <Button fx:id="studentAddBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="329.0" text="Add" BorderPane.alignment="CENTER" />
+                  <Button fx:id="studentAddBtn" mnemonicParsing="false" onAction="#onStudentAddBtnClick" prefHeight="40.0" prefWidth="329.0" text="Add" BorderPane.alignment="CENTER" />
                </center>
                <top>
                   <Region prefHeight="23.0" prefWidth="280.0" BorderPane.alignment="CENTER" />
@@ -126,5 +128,10 @@
             </BorderPane>
          </children>
       </GridPane>
+      <Text fx:id="errorText" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="There are errors with the form. Please fix them" textAlignment="CENTER" wrappingWidth="601.3367309570312">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </VBox>

@@ -105,9 +105,16 @@ public class UpdateStudentScreenController extends StudentOperationScreensContro
 
     }
 
-    public void onStudentDeleteBtnClick() {
+    public void onStudentDeleteBtnClick() throws IOException {
         StudentManager studentManager = StudentManager.getInstance();
 
         studentManager.removeStudent(student);
+
+        Parent studentScene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(previousScreen)));
+
+        // Get current stage
+        Stage currentStage = (Stage) studentOperationBtn.getScene().getWindow();
+
+        currentStage.setScene(new Scene(studentScene));
     }
 }

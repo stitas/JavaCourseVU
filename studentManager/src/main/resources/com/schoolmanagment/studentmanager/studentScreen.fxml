@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
@@ -34,7 +33,14 @@
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter:" wrappingWidth="178.13675236701965" BorderPane.alignment="CENTER" />
                </top>
             </BorderPane>
-            <Region prefHeight="62.0" prefWidth="113.0" HBox.hgrow="ALWAYS" />
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <Button fx:id="attendanceBtn" mnemonicParsing="false" onAction="#onAttendanceBtnClick" prefHeight="48.0" prefWidth="166.0" text="Attendance" BorderPane.alignment="CENTER" />
+               </center>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </BorderPane>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
                   <Button fx:id="addBtn" mnemonicParsing="false" onAction="#onAddBtnClick" prefHeight="48.0" prefWidth="166.0" text="Add" BorderPane.alignment="CENTER" />

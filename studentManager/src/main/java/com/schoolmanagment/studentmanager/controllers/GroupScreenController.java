@@ -29,10 +29,12 @@ public class GroupScreenController extends TableScreenController{
 
     FilteredList<Group> filteredData;
 
+    public GroupScreenController() {
+        super("/com/schoolmanagment/studentmanager/index.fxml");
+    }
+
     @FXML
     private void initialize(){
-        pushPreviousScreen();
-
         EnrollmentManager enrollmentManager = EnrollmentManager.getInstance();
         GroupManager groupManager = GroupManager.getInstance();
 
@@ -81,13 +83,7 @@ public class GroupScreenController extends TableScreenController{
         }
         // Do nothing if user has not selected student from the table
         catch (NullPointerException e) {
-            e.printStackTrace();
             return;
         }
-    }
-
-    @Override
-    protected void pushPreviousScreen() {
-        previousScreen = "/com/schoolmanagment/studentmanager/index.fxml";
     }
 }

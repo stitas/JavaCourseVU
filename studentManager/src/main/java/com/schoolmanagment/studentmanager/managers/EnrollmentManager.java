@@ -77,4 +77,16 @@ public class EnrollmentManager {
         return notInGroup;
     }
 
+    public List<Group> getStudentGroups(Student student){
+        List<Group> studentGroups = new ArrayList<>();
+
+        for(Enrollment enrollment : enrollmentList){
+            if(enrollment.getStudent().equals(student)){
+                studentGroups.add(enrollment.getGroup());
+            }
+        }
+
+        return studentGroups;
+    }
+
 }

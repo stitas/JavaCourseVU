@@ -35,9 +35,12 @@ public class UpdateGroupScreenController extends ChildScreenController{
     @FXML
     private Text errorText;
 
+    public UpdateGroupScreenController() {
+        super("/com/schoolmanagment/studentmanager/groupsScreen.fxml");
+    }
+
     @FXML
     public void initialize() {
-        pushPreviousScreen();
         errorText.setVisible(false);
     }
 
@@ -149,10 +152,5 @@ public class UpdateGroupScreenController extends ChildScreenController{
         }
 
         return text;
-    }
-
-    @Override
-    protected void pushPreviousScreen() {
-        previousScreen = "/com/schoolmanagment/studentmanager/groupsScreen.fxml";
     }
 }

@@ -16,6 +16,10 @@ public abstract class ChildScreenController {
 
     String previousScreen;
 
+    public ChildScreenController(String previousScreen){
+        this.previousScreen = previousScreen;
+    }
+
     /** Go back to index screen on click **/
     public void onBackBtnClick() throws IOException {
         Parent studentScene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(previousScreen)));
@@ -25,6 +29,4 @@ public abstract class ChildScreenController {
 
         currentStage.setScene(new Scene(studentScene));
     }
-
-    protected abstract void pushPreviousScreen();
 }

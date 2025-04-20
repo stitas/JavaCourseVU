@@ -1,18 +1,10 @@
 package com.schoolmanagment.studentmanager.controllers;
 
-import com.schoolmanagment.studentmanager.student.Student;
-import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public abstract class TableScreenController extends ChildScreenController{
     @FXML
@@ -20,6 +12,10 @@ public abstract class TableScreenController extends ChildScreenController{
 
     @FXML
     protected Button addBtn, updateBtn;
+
+    public TableScreenController(String previousScreen) {
+        super(previousScreen);
+    }
 
     protected abstract void applyFilter();
     public abstract void onAddBtnClick() throws IOException;

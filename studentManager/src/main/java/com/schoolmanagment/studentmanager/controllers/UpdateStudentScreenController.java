@@ -55,7 +55,6 @@ public class UpdateStudentScreenController extends StudentOperationScreensContro
     @FXML
     @Override
     protected void initialize() {
-        pushPreviousScreen();
         errorText.setVisible(false);
     }
 

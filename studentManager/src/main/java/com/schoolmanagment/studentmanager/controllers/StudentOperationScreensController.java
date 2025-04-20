@@ -33,9 +33,12 @@ public abstract class StudentOperationScreensController extends ChildScreenContr
     protected final ToggleGroup radioGroup = new ToggleGroup();
     protected RadioButton selectedRadio;
 
+    public StudentOperationScreensController() {
+        super("/com/schoolmanagment/studentmanager/studentScreen.fxml");
+    }
+
     @FXML
     protected void initialize() {
-        pushPreviousScreen();
         undergraduateRadio.setToggleGroup(radioGroup);
         masterRadio.setToggleGroup(radioGroup);
         radioGroup.selectedToggleProperty().addListener(e -> onRadioChange());
@@ -117,11 +120,6 @@ public abstract class StudentOperationScreensController extends ChildScreenContr
         }
 
         return num;
-    }
-
-    @Override
-    protected void pushPreviousScreen() {
-        previousScreen = "/com/schoolmanagment/studentmanager/studentScreen.fxml";
     }
 
 }

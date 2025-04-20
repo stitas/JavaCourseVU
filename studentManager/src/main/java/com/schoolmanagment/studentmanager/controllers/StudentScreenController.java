@@ -22,11 +22,14 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class StudentScreenController extends TableScreenController{
+    @FXML
+    private TableView<Student> table;
 
     @FXML
-    protected TableView<Student> table;
-    public TableColumn<Student, Integer> idCol, ageCol;
-    public TableColumn<Student, String> firstNameCol, lastNameCol, degreeCol, courseCol;
+    private TableColumn<Student, Integer> idCol, ageCol;
+
+    @FXML
+    private TableColumn<Student, String> firstNameCol, lastNameCol, degreeCol, courseCol;
 
     FilteredList<Student> filteredData;
 

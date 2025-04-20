@@ -31,7 +31,7 @@ public class AddStudentScreenController extends StudentOperationScreensControlle
             studentManager.addStudent(new UndergraduateStudent(firstName, lastName, age, course, 1));
         }
         else {
-            studentManager.addStudent(new MasterStudent(firstName, lastName, age, course, ""));
+            studentManager.addStudent(new MasterStudent(firstName, lastName, age, course, "-"));
         }
 
         Parent studentScene = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(previousScreen)));

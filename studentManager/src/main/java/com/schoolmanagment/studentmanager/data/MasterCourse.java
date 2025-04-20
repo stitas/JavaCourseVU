@@ -20,4 +20,14 @@ public enum MasterCourse implements Course{
     public String getName() {
         return this.name;
     }
+
+    public static Course fromString(String name) {
+        for(MasterCourse course : MasterCourse.values()){
+            if(course.getName().equals(name)){
+                return course;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid course name:" + name);
+    }
 }

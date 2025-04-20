@@ -14,7 +14,7 @@
    <children>
       <HBox prefHeight="62.0" prefWidth="600.0">
          <children>
-            <BorderPane prefHeight="62.0" prefWidth="97.0">
+            <BorderPane prefHeight="62.0" prefWidth="125.0">
                <center>
                   <Button fx:id="backBtn" mnemonicParsing="false" onAction="#onBackBtnClick" prefHeight="26.0" prefWidth="46.0" text="&lt;" BorderPane.alignment="CENTER" />
                </center>
@@ -22,7 +22,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </BorderPane>
-            <BorderPane prefHeight="200.0" prefWidth="198.0">
+            <BorderPane prefHeight="62.0" prefWidth="188.0">
                <center>
                   <TextField fx:id="filterField" prefHeight="26.0" prefWidth="163.0" BorderPane.alignment="CENTER" />
                </center>

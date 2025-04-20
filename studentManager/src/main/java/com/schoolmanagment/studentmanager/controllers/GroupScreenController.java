@@ -3,8 +3,6 @@ package com.schoolmanagment.studentmanager.controllers;
 import com.schoolmanagment.studentmanager.data.Group;
 import com.schoolmanagment.studentmanager.managers.EnrollmentManager;
 import com.schoolmanagment.studentmanager.managers.GroupManager;
-import com.schoolmanagment.studentmanager.managers.StudentManager;
-import com.schoolmanagment.studentmanager.student.Student;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.FilteredList;
@@ -18,7 +16,6 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
 
 public class GroupScreenController extends TableScreenController{

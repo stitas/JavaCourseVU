@@ -69,7 +69,7 @@ public class UpdateGroupScreenController extends ChildScreenController{
 
     @FXML
     public void onUpdateStudentGroupBtnClick() throws IOException {
-        String name = getTextInput(nameField);
+        String name = nameField.getText();
 
         if(name.isEmpty()){
             errorText.setVisible(true);
@@ -129,28 +129,5 @@ public class UpdateGroupScreenController extends ChildScreenController{
 
         studentListView.setItems(FXCollections.observableList(studentsNotInGroup));
         groupListView.setItems(FXCollections.observableList(studentsInGroup));
-    }
-
-    /** Gets String from input. Returns -1 if input is not String **/
-    public String getTextInput(TextField nameField) {
-        String text;
-
-        try {
-            if(nameField.getText().isEmpty()){
-                return "";
-            }
-            else {
-                text = nameField.getText();
-            }
-
-        } catch (Exception e){
-            return "";
-        }
-
-        if(!text.matches("^[a-zA-Z ]+$")){
-            return "";
-        }
-
-        return text;
     }
 }

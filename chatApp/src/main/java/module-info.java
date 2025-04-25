@@ -1,8 +1,12 @@
-module com.schoolmanagment.chatapp {
+module com.chatapp.chatapp {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.fasterxml.jackson.databind;
 
 
-    opens com.schoolmanagment.chatapp to javafx.fxml;
-    exports com.schoolmanagment.chatapp;
+    opens com.chatapp.chatapp to javafx.fxml;
+    exports com.chatapp.chatapp;
+
+    opens com.chatapp.chatapp.controllers to javafx.fxml;
+    exports com.chatapp.chatapp.controllers;
 }

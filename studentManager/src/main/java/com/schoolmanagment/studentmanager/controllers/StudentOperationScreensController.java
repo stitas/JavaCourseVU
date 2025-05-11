@@ -50,7 +50,7 @@ public abstract class StudentOperationScreensController extends ChildScreenContr
 
     protected void onRadioChange() {
         selectedRadio = (RadioButton) radioGroup.getSelectedToggle();
-        List<Course> enumValues = new ArrayList<>();
+        List<Course> enumValues;
 
         if(selectedRadio == undergraduateRadio){
             enumValues = Arrays.asList(UndergraduateCourse.values());

@@ -1,8 +1,5 @@
 package com.schoolmanagment.studentmanager.controllers;
 
-import com.schoolmanagment.studentmanager.Main;
-import com.schoolmanagment.studentmanager.data.MasterCourse;
-import com.schoolmanagment.studentmanager.data.UndergraduateCourse;
 import com.schoolmanagment.studentmanager.managers.StudentManager;
 import com.schoolmanagment.studentmanager.student.MasterStudent;
 import com.schoolmanagment.studentmanager.student.Student;

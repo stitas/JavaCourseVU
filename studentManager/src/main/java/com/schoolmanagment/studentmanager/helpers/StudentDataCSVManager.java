@@ -1,4 +1,4 @@
-package com.schoolmanagment.studentmanager.helpers;
+    package com.schoolmanagment.studentmanager.helpers;
 
 import com.schoolmanagment.studentmanager.data.Course;
 import com.schoolmanagment.studentmanager.data.MasterCourse;

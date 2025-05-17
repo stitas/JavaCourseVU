@@ -1,3 +1,6 @@
+/*
+@author Titas Stongvila
+ */
 package com.chatapp.chatapp;
 
 import javafx.application.Application;

@@ -1,3 +1,7 @@
+/*
+* @author Titas Stongvila
+ */
+
 package com.multithreadfileupload.multithreadfileupload;
 
 import javafx.application.Application;

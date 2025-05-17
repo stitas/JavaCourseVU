@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/spinnerLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:divider="@drawable/empty_tall_divider"
+        android:orientation="vertical"
+        android:padding="7dp"
+        android:showDividers="middle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/mainContentLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:divider="@drawable/empty_tall_divider"
+        android:orientation="vertical"
+        android:padding="7dp"
+        android:showDividers="middle"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Loan Calculator"
+            android:textColor="@color/black"
+            android:textSize="34sp" />
+
+        <EditText
+            android:id="@+id/loanAmountField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Loan amount"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/yearField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Years"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/monthsField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Months"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/interestField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Interest rate %"
+            android:inputType="numberDecimal" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Postponement"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/postStartField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Start month"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/postEndField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="End month"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/postInterestField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Interest rate %"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Loan type"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/lineGraphRadio"
+                android:layout_width="202dp"
+                android:layout_height="wrap_content"
+                android:text="Line" />
+
+            <RadioButton
+                android:id="@+id/annuityGraphRadio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Annuity" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/calculateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:backgroundTint="@color/green"
+            android:text="Calculate" />
+
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="There are errors with the form please fix them"
+            android:textColor="@color/red"
+            android:textColorHighlight="@color/red"
+            android:textColorHint="@color/red"
+            android:textColorLink="@color/red"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            tools:text="There are errors with the form please fix them" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,23 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="276fc74b-984d-4453-8ff3-8da01096252f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/controllers/FileUploadController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/controllers/TableController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/filemanagment/FileGetter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/filemanagment/FileTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/filemanagment/RowData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/multithreadfileupload/multithreadfileupload/file-table.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/androidTest/java/com/example/loancalculatorandroid/ExampleInstrumentedTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/java/com/example/loancalculatorandroid/MainActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/drawable/empty_tall_divider.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/layout/loan_screen.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/values-night/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/values/themes.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/app/src/test/java/com/example/loancalculatorandroid/ExampleUnitTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/gradle/libs.versions.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../loanCalculatorAndroid/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chatApp/src/main/java/com/chatapp/chatapp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../chatApp/src/main/java/com/chatapp/chatapp/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chatApp/src/main/java/com/chatapp/chatapp/data/rooms.json" beforeDir="false" afterPath="$PROJECT_DIR$/../chatApp/src/main/java/com/chatapp/chatapp/data/rooms.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chatApp/src/main/java/com/chatapp/chatapp/data/users.json" beforeDir="false" afterPath="$PROJECT_DIR$/../chatApp/src/main/java/com/chatapp/chatapp/data/users.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/multithreadfileupload/multithreadfileupload/hello-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studentManager/src/main/java/com/schoolmanagment/studentmanager/helpers/StudentDataCSVManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../studentManager/src/main/java/com/schoolmanagment/studentmanager/helpers/StudentDataCSVManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../studentManager/src/main/resources/com/schoolmanagment/studentmanager/studentScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../studentManager/src/main/resources/com/schoolmanagment/studentmanager/studentScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/multithreadfileupload/multithreadfileupload/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,18 +66,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "stitas"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;stitas&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/stitas/JavaCourseVU.git",
-    "accountId": "19e07a4d-c8d8-44c8-b030-4ea3ff9b03b5"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/stitas/JavaCourseVU.git&quot;,
+    &quot;accountId&quot;: &quot;19e07a4d-c8d8-44c8-b030-4ea3ff9b03b5&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -58,25 +85,25 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2wwnN7xr941vprgsix3TWNsJdCd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Titas/Desktop/java/multithreadFileUpload/src/main/java/com/multithreadfileupload/multithreadfileupload/filemanagment"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Titas/Desktop/java/shopDesignPatterns&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Titas\Desktop\java\multithreadFileUpload\src\main\java\com\multithreadfileupload\multithreadfileupload\filemanagment" />
